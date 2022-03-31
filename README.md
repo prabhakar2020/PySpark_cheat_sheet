@@ -9,27 +9,27 @@ from pyspark.sql import SparkSession
 
 
 ```python
-spark = SparkSession.builder.master("local[0]").appName("SparkExamples.com").getOrCreate()
+spark = SparkSession.builder.master("local[*]").appName("SparkExamples.com").getOrCreate()
 ```
 
 
 ```python
-data = [(1,'James',None,'Smith',51,10,'.Net','Newyork', '1991-04-01','M',3000),
-  (2,'Michael','Rose',None,45,11,'Ruby','Newyork', '2000-05-19','M',4000),
-  (3,'Robert',None,'Williams',32,10,'Scala','California','1978-09-05','M',4000),
-  (4,'Maria','Anne','Jones',36,9,'Java','Hyderabad','1967-12-01','F',5000),
-  (5,'Jen','Mary','Brown',39,5,'Scala','Nagpur','1980-02-17','F',0),
-  (6,'Prabhakar','B','G',33,11,'Python','Pune','1967-12-01','M',5000),
-  (7,'Praveen','B','G',21,13,'Java','Hyderabad','1967-12-01','M',6500),
-  (8,'Rajesh','B','G',25,2,'Scala','Nellore','1967-12-01','M',5100),
-  (9,'Pramodh','B','G',49,9,'Ruby','Pune','1967-12-01','M',5000),
-  (10,'Ajay',None,None,50,10,None,'Pune','1967-12-01','M',2500),
-  (11,'Bob','D',None,43,14,'R','Hyderabad','1967-12-01','M',2500),
-  (12,'Chris','B','Smith',47,12,'JavaScript',None,'1967-12-01','M',2500),
-  (13,None,None,None,55,None,None,None,None,None,None),
+data = [(1,'James',None,'Smith',51,10,'.Net','Newyork', 1, '1991-04-01','M',3000),
+  (2,'Michael','Rose',None,45,11,'Ruby','Newyork', 2,'2000-05-19','M',4000),
+  (3,'Robert',None,'Williams',32,10,'Scala','California',1,'1978-09-05','M',4000),
+  (4,'Maria','Anne','Jones',36,9,'Java','Hyderabad',4,'1967-12-01','F',5000),
+  (5,'Jen','Mary','Brown',39,5,'Scala','Nagpur',5,'1980-02-17','F',0),
+  (6,'Prabhakar','B','G',33,11,'Python','Pune',2,'1967-12-01','M',5000),
+  (7,'Praveen','B','G',21,13,'Java','Hyderabad',3,'1967-12-01','M',6500),
+  (8,'Rajesh','B','G',25,2,'Scala','Nellore',4,'1967-12-01','M',5100),
+  (9,'Pramodh','B','G',49,9,'Ruby','Pune',1,'1967-12-01','M',5000),
+  (10,'Ajay',None,None,50,10,None,'Pune',5,'1967-12-01','M',2500),
+  (11,'Bob','D',None,43,14,'R','Hyderabad',6,'1967-12-01','M',2500),
+  (12,'Chris','B','Smith',47,12,'JavaScript',None,6,'1967-12-01','M',2500),
+  (13,None,None,None,55,None,None,None,6,None,None,None),
 ]
 
-columns = ["SrNo", "firstname","middlename","lastname","age","experiance","skill","city", "dob","gender","salary"]
+columns = ["SrNo", "firstname","middlename","lastname","age","experiance","skill","city", "depart_id","dob","gender","salary"]
 ```
 
 
@@ -42,23 +42,23 @@ df = spark.createDataFrame(data=data, schema = columns)
 df.show()
 ```
 
-    +----+---------+----------+--------+---+----------+----------+----------+----------+------+------+
-    |SrNo|firstname|middlename|lastname|age|experiance|     skill|      city|       dob|gender|salary|
-    +----+---------+----------+--------+---+----------+----------+----------+----------+------+------+
-    |   1|    James|      null|   Smith| 51|        10|      .Net|   Newyork|1991-04-01|     M|  3000|
-    |   2|  Michael|      Rose|    null| 45|        11|      Ruby|   Newyork|2000-05-19|     M|  4000|
-    |   3|   Robert|      null|Williams| 32|        10|     Scala|California|1978-09-05|     M|  4000|
-    |   4|    Maria|      Anne|   Jones| 36|         9|      Java| Hyderabad|1967-12-01|     F|  5000|
-    |   5|      Jen|      Mary|   Brown| 39|         5|     Scala|    Nagpur|1980-02-17|     F|     0|
-    |   6|Prabhakar|         B|       G| 33|        11|    Python|      Pune|1967-12-01|     M|  5000|
-    |   7|  Praveen|         B|       G| 21|        13|      Java| Hyderabad|1967-12-01|     M|  6500|
-    |   8|   Rajesh|         B|       G| 25|         2|     Scala|   Nellore|1967-12-01|     M|  5100|
-    |   9|  Pramodh|         B|       G| 49|         9|      Ruby|      Pune|1967-12-01|     M|  5000|
-    |  10|     Ajay|      null|    null| 50|        10|      null|      Pune|1967-12-01|     M|  2500|
-    |  11|      Bob|         D|    null| 43|        14|         R| Hyderabad|1967-12-01|     M|  2500|
-    |  12|    Chris|         B|   Smith| 47|        12|JavaScript|      null|1967-12-01|     M|  2500|
-    |  13|     null|      null|    null| 55|      null|      null|      null|      null|  null|  null|
-    +----+---------+----------+--------+---+----------+----------+----------+----------+------+------+
+    +----+---------+----------+--------+---+----------+----------+----------+---------+----------+------+------+
+    |SrNo|firstname|middlename|lastname|age|experiance|     skill|      city|depart_id|       dob|gender|salary|
+    +----+---------+----------+--------+---+----------+----------+----------+---------+----------+------+------+
+    |   1|    James|      null|   Smith| 51|        10|      .Net|   Newyork|        1|1991-04-01|     M|  3000|
+    |   2|  Michael|      Rose|    null| 45|        11|      Ruby|   Newyork|        2|2000-05-19|     M|  4000|
+    |   3|   Robert|      null|Williams| 32|        10|     Scala|California|        1|1978-09-05|     M|  4000|
+    |   4|    Maria|      Anne|   Jones| 36|         9|      Java| Hyderabad|        4|1967-12-01|     F|  5000|
+    |   5|      Jen|      Mary|   Brown| 39|         5|     Scala|    Nagpur|        5|1980-02-17|     F|     0|
+    |   6|Prabhakar|         B|       G| 33|        11|    Python|      Pune|        2|1967-12-01|     M|  5000|
+    |   7|  Praveen|         B|       G| 21|        13|      Java| Hyderabad|        3|1967-12-01|     M|  6500|
+    |   8|   Rajesh|         B|       G| 25|         2|     Scala|   Nellore|        4|1967-12-01|     M|  5100|
+    |   9|  Pramodh|         B|       G| 49|         9|      Ruby|      Pune|        1|1967-12-01|     M|  5000|
+    |  10|     Ajay|      null|    null| 50|        10|      null|      Pune|        5|1967-12-01|     M|  2500|
+    |  11|      Bob|         D|    null| 43|        14|         R| Hyderabad|        6|1967-12-01|     M|  2500|
+    |  12|    Chris|         B|   Smith| 47|        12|JavaScript|      null|        6|1967-12-01|     M|  2500|
+    |  13|     null|      null|    null| 55|      null|      null|      null|        6|      null|  null|  null|
+    +----+---------+----------+--------+---+----------+----------+----------+---------+----------+------+------+
     
 
 
@@ -81,23 +81,23 @@ df_sql = spark.sql("select * from PERSON_DATA")
 df_sql.show()
 ```
 
-    +----+---------+----------+--------+---+----------+----------+----------+----------+------+------+
-    |SrNo|firstname|middlename|lastname|age|experiance|     skill|      city|       dob|gender|salary|
-    +----+---------+----------+--------+---+----------+----------+----------+----------+------+------+
-    |   1|    James|      null|   Smith| 51|        10|      .Net|   Newyork|1991-04-01|     M|  3000|
-    |   2|  Michael|      Rose|    null| 45|        11|      Ruby|   Newyork|2000-05-19|     M|  4000|
-    |   3|   Robert|      null|Williams| 32|        10|     Scala|California|1978-09-05|     M|  4000|
-    |   4|    Maria|      Anne|   Jones| 36|         9|      Java| Hyderabad|1967-12-01|     F|  5000|
-    |   5|      Jen|      Mary|   Brown| 39|         5|     Scala|    Nagpur|1980-02-17|     F|     0|
-    |   6|Prabhakar|         B|       G| 33|        11|    Python|      Pune|1967-12-01|     M|  5000|
-    |   7|  Praveen|         B|       G| 21|        13|      Java| Hyderabad|1967-12-01|     M|  6500|
-    |   8|   Rajesh|         B|       G| 25|         2|     Scala|   Nellore|1967-12-01|     M|  5100|
-    |   9|  Pramodh|         B|       G| 49|         9|      Ruby|      Pune|1967-12-01|     M|  5000|
-    |  10|     Ajay|      null|    null| 50|        10|      null|      Pune|1967-12-01|     M|  2500|
-    |  11|      Bob|         D|    null| 43|        14|         R| Hyderabad|1967-12-01|     M|  2500|
-    |  12|    Chris|         B|   Smith| 47|        12|JavaScript|      null|1967-12-01|     M|  2500|
-    |  13|     null|      null|    null| 55|      null|      null|      null|      null|  null|  null|
-    +----+---------+----------+--------+---+----------+----------+----------+----------+------+------+
+    +----+---------+----------+--------+---+----------+----------+----------+---------+----------+------+------+
+    |SrNo|firstname|middlename|lastname|age|experiance|     skill|      city|depart_id|       dob|gender|salary|
+    +----+---------+----------+--------+---+----------+----------+----------+---------+----------+------+------+
+    |   1|    James|      null|   Smith| 51|        10|      .Net|   Newyork|        1|1991-04-01|     M|  3000|
+    |   2|  Michael|      Rose|    null| 45|        11|      Ruby|   Newyork|        2|2000-05-19|     M|  4000|
+    |   3|   Robert|      null|Williams| 32|        10|     Scala|California|        1|1978-09-05|     M|  4000|
+    |   4|    Maria|      Anne|   Jones| 36|         9|      Java| Hyderabad|        4|1967-12-01|     F|  5000|
+    |   5|      Jen|      Mary|   Brown| 39|         5|     Scala|    Nagpur|        5|1980-02-17|     F|     0|
+    |   6|Prabhakar|         B|       G| 33|        11|    Python|      Pune|        2|1967-12-01|     M|  5000|
+    |   7|  Praveen|         B|       G| 21|        13|      Java| Hyderabad|        3|1967-12-01|     M|  6500|
+    |   8|   Rajesh|         B|       G| 25|         2|     Scala|   Nellore|        4|1967-12-01|     M|  5100|
+    |   9|  Pramodh|         B|       G| 49|         9|      Ruby|      Pune|        1|1967-12-01|     M|  5000|
+    |  10|     Ajay|      null|    null| 50|        10|      null|      Pune|        5|1967-12-01|     M|  2500|
+    |  11|      Bob|         D|    null| 43|        14|         R| Hyderabad|        6|1967-12-01|     M|  2500|
+    |  12|    Chris|         B|   Smith| 47|        12|JavaScript|      null|        6|1967-12-01|     M|  2500|
+    |  13|     null|      null|    null| 55|      null|      null|      null|        6|      null|  null|  null|
+    +----+---------+----------+--------+---+----------+----------+----------+---------+----------+------+------+
     
 
 
@@ -160,13 +160,13 @@ spark.sql("select skill as Skill,count(*) as Total_Employees from PERSON_DATA gr
 spark.sql("select * from PERSON_DATA where firstname like '%P%'").show()
 ```
 
-    +----+---------+----------+--------+---+----------+------+---------+----------+------+------+
-    |SrNo|firstname|middlename|lastname|age|experiance| skill|     city|       dob|gender|salary|
-    +----+---------+----------+--------+---+----------+------+---------+----------+------+------+
-    |   6|Prabhakar|         B|       G| 33|        11|Python|     Pune|1967-12-01|     M|  5000|
-    |   7|  Praveen|         B|       G| 21|        13|  Java|Hyderabad|1967-12-01|     M|  6500|
-    |   9|  Pramodh|         B|       G| 49|         9|  Ruby|     Pune|1967-12-01|     M|  5000|
-    +----+---------+----------+--------+---+----------+------+---------+----------+------+------+
+    +----+---------+----------+--------+---+----------+------+---------+---------+----------+------+------+
+    |SrNo|firstname|middlename|lastname|age|experiance| skill|     city|depart_id|       dob|gender|salary|
+    +----+---------+----------+--------+---+----------+------+---------+---------+----------+------+------+
+    |   6|Prabhakar|         B|       G| 33|        11|Python|     Pune|        2|1967-12-01|     M|  5000|
+    |   7|  Praveen|         B|       G| 21|        13|  Java|Hyderabad|        3|1967-12-01|     M|  6500|
+    |   9|  Pramodh|         B|       G| 49|         9|  Ruby|     Pune|        1|1967-12-01|     M|  5000|
+    +----+---------+----------+--------+---+----------+------+---------+---------+----------+------+------+
     
 
 
@@ -175,19 +175,82 @@ spark.sql("select * from PERSON_DATA where firstname like '%P%'").show()
 spark.sql("select * from PERSON_DATA where salary > 3000").show()
 ```
 
-    +----+---------+----------+--------+---+----------+------+----------+----------+------+------+
-    |SrNo|firstname|middlename|lastname|age|experiance| skill|      city|       dob|gender|salary|
-    +----+---------+----------+--------+---+----------+------+----------+----------+------+------+
-    |   2|  Michael|      Rose|    null| 45|        11|  Ruby|   Newyork|2000-05-19|     M|  4000|
-    |   3|   Robert|      null|Williams| 32|        10| Scala|California|1978-09-05|     M|  4000|
-    |   4|    Maria|      Anne|   Jones| 36|         9|  Java| Hyderabad|1967-12-01|     F|  5000|
-    |   6|Prabhakar|         B|       G| 33|        11|Python|      Pune|1967-12-01|     M|  5000|
-    |   7|  Praveen|         B|       G| 21|        13|  Java| Hyderabad|1967-12-01|     M|  6500|
-    |   8|   Rajesh|         B|       G| 25|         2| Scala|   Nellore|1967-12-01|     M|  5100|
-    |   9|  Pramodh|         B|       G| 49|         9|  Ruby|      Pune|1967-12-01|     M|  5000|
-    +----+---------+----------+--------+---+----------+------+----------+----------+------+------+
+    +----+---------+----------+--------+---+----------+------+----------+---------+----------+------+------+
+    |SrNo|firstname|middlename|lastname|age|experiance| skill|      city|depart_id|       dob|gender|salary|
+    +----+---------+----------+--------+---+----------+------+----------+---------+----------+------+------+
+    |   2|  Michael|      Rose|    null| 45|        11|  Ruby|   Newyork|        2|2000-05-19|     M|  4000|
+    |   3|   Robert|      null|Williams| 32|        10| Scala|California|        1|1978-09-05|     M|  4000|
+    |   4|    Maria|      Anne|   Jones| 36|         9|  Java| Hyderabad|        4|1967-12-01|     F|  5000|
+    |   6|Prabhakar|         B|       G| 33|        11|Python|      Pune|        2|1967-12-01|     M|  5000|
+    |   7|  Praveen|         B|       G| 21|        13|  Java| Hyderabad|        3|1967-12-01|     M|  6500|
+    |   8|   Rajesh|         B|       G| 25|         2| Scala|   Nellore|        4|1967-12-01|     M|  5100|
+    |   9|  Pramodh|         B|       G| 49|         9|  Ruby|      Pune|        1|1967-12-01|     M|  5000|
+    +----+---------+----------+--------+---+----------+------+----------+---------+----------+------+------+
     
 
+
+## Joining two or more dataframes
+
+
+```python
+department_data = [(1, 'IOT'), (2,'DEVELOPMENT'), (3,'MANAGEMENT'), (4,'PAYROLL'), (5,'RECRUITMENT'),(6,'SECURITY')]
+
+department_columns = ["department_id", "department_name"]
+department_df = spark.createDataFrame(data=department_data, schema = department_columns)
+```
+
+
+```python
+df.createOrReplaceTempView('EMPLOYEE')
+department_df.createOrReplaceTempView('DEPARTMENT')
+```
+
+
+```python
+spark.sql("select D.department_name, count(*) from DEPARTMENT as D, EMPLOYEE EMP where EMP.depart_id = D.department_id group by D.department_name").show()
+```
+
+                                                                                    
+
+    +---------------+--------+
+    |department_name|count(1)|
+    +---------------+--------+
+    |            IOT|       3|
+    |    RECRUITMENT|       2|
+    |    DEVELOPMENT|       2|
+    |     MANAGEMENT|       1|
+    |       SECURITY|       3|
+    |        PAYROLL|       2|
+    +---------------+--------+
+    
+
+
+
+```python
+spark.sql("select EMP.srno, EMP.firstname,D.department_name, EMP.salary from DEPARTMENT as D, EMPLOYEE EMP where D.department_id = EMP.depart_id ORDER by EMP.salary DESC").show()
+```
+
+    +----+---------+---------------+------+
+    |srno|firstname|department_name|salary|
+    +----+---------+---------------+------+
+    |   7|  Praveen|     MANAGEMENT|  6500|
+    |   8|   Rajesh|        PAYROLL|  5100|
+    |   9|  Pramodh|            IOT|  5000|
+    |   4|    Maria|        PAYROLL|  5000|
+    |   6|Prabhakar|    DEVELOPMENT|  5000|
+    |   2|  Michael|    DEVELOPMENT|  4000|
+    |   3|   Robert|            IOT|  4000|
+    |   1|    James|            IOT|  3000|
+    |  11|      Bob|       SECURITY|  2500|
+    |  10|     Ajay|    RECRUITMENT|  2500|
+    |  12|    Chris|       SECURITY|  2500|
+    |   5|      Jen|    RECRUITMENT|     0|
+    |  13|     null|       SECURITY|  null|
+    +----+---------+---------------+------+
+    
+
+
+                                                                                    
 
 # Read CSV file content
 
@@ -273,23 +336,23 @@ spark.sql("select * from EMPLOYEES where skill='Python'").show()
 df.show()
 ```
 
-    +----+---------+----------+--------+---+----------+----------+----------+----------+------+------+
-    |SrNo|firstname|middlename|lastname|age|experiance|     skill|      city|       dob|gender|salary|
-    +----+---------+----------+--------+---+----------+----------+----------+----------+------+------+
-    |   1|    James|      null|   Smith| 51|        10|      .Net|   Newyork|1991-04-01|     M|  3000|
-    |   2|  Michael|      Rose|    null| 45|        11|      Ruby|   Newyork|2000-05-19|     M|  4000|
-    |   3|   Robert|      null|Williams| 32|        10|     Scala|California|1978-09-05|     M|  4000|
-    |   4|    Maria|      Anne|   Jones| 36|         9|      Java| Hyderabad|1967-12-01|     F|  5000|
-    |   5|      Jen|      Mary|   Brown| 39|         5|     Scala|    Nagpur|1980-02-17|     F|     0|
-    |   6|Prabhakar|         B|       G| 33|        11|    Python|      Pune|1967-12-01|     M|  5000|
-    |   7|  Praveen|         B|       G| 21|        13|      Java| Hyderabad|1967-12-01|     M|  6500|
-    |   8|   Rajesh|         B|       G| 25|         2|     Scala|   Nellore|1967-12-01|     M|  5100|
-    |   9|  Pramodh|         B|       G| 49|         9|      Ruby|      Pune|1967-12-01|     M|  5000|
-    |  10|     Ajay|      null|    null| 50|        10|      null|      Pune|1967-12-01|     M|  2500|
-    |  11|      Bob|         D|    null| 43|        14|         R| Hyderabad|1967-12-01|     M|  2500|
-    |  12|    Chris|         B|   Smith| 47|        12|JavaScript|      null|1967-12-01|     M|  2500|
-    |  13|     null|      null|    null| 55|      null|      null|      null|      null|  null|  null|
-    +----+---------+----------+--------+---+----------+----------+----------+----------+------+------+
+    +----+---------+----------+--------+---+----------+----------+----------+---------+----------+------+------+
+    |SrNo|firstname|middlename|lastname|age|experiance|     skill|      city|depart_id|       dob|gender|salary|
+    +----+---------+----------+--------+---+----------+----------+----------+---------+----------+------+------+
+    |   1|    James|      null|   Smith| 51|        10|      .Net|   Newyork|        1|1991-04-01|     M|  3000|
+    |   2|  Michael|      Rose|    null| 45|        11|      Ruby|   Newyork|        2|2000-05-19|     M|  4000|
+    |   3|   Robert|      null|Williams| 32|        10|     Scala|California|        1|1978-09-05|     M|  4000|
+    |   4|    Maria|      Anne|   Jones| 36|         9|      Java| Hyderabad|        4|1967-12-01|     F|  5000|
+    |   5|      Jen|      Mary|   Brown| 39|         5|     Scala|    Nagpur|        5|1980-02-17|     F|     0|
+    |   6|Prabhakar|         B|       G| 33|        11|    Python|      Pune|        2|1967-12-01|     M|  5000|
+    |   7|  Praveen|         B|       G| 21|        13|      Java| Hyderabad|        3|1967-12-01|     M|  6500|
+    |   8|   Rajesh|         B|       G| 25|         2|     Scala|   Nellore|        4|1967-12-01|     M|  5100|
+    |   9|  Pramodh|         B|       G| 49|         9|      Ruby|      Pune|        1|1967-12-01|     M|  5000|
+    |  10|     Ajay|      null|    null| 50|        10|      null|      Pune|        5|1967-12-01|     M|  2500|
+    |  11|      Bob|         D|    null| 43|        14|         R| Hyderabad|        6|1967-12-01|     M|  2500|
+    |  12|    Chris|         B|   Smith| 47|        12|JavaScript|      null|        6|1967-12-01|     M|  2500|
+    |  13|     null|      null|    null| 55|      null|      null|      null|        6|      null|  null|  null|
+    +----+---------+----------+--------+---+----------+----------+----------+---------+----------+------+------+
     
 
 
@@ -302,23 +365,23 @@ df.dropDuplicates().show()
 # Here 'Prabhakar' user name entry was apperead two types. dropDuplicates function will remove duplicate entries
 ```
 
-    +----+---------+----------+--------+---+----------+----------+----------+----------+------+------+
-    |SrNo|firstname|middlename|lastname|age|experiance|     skill|      city|       dob|gender|salary|
-    +----+---------+----------+--------+---+----------+----------+----------+----------+------+------+
-    |   8|   Rajesh|         B|       G| 25|         2|     Scala|   Nellore|1967-12-01|     M|  5100|
-    |   6|Prabhakar|         B|       G| 33|        11|    Python|      Pune|1967-12-01|     M|  5000|
-    |  10|     Ajay|      null|    null| 50|        10|      null|      Pune|1967-12-01|     M|  2500|
-    |  11|      Bob|         D|    null| 43|        14|         R| Hyderabad|1967-12-01|     M|  2500|
-    |   2|  Michael|      Rose|    null| 45|        11|      Ruby|   Newyork|2000-05-19|     M|  4000|
-    |  12|    Chris|         B|   Smith| 47|        12|JavaScript|      null|1967-12-01|     M|  2500|
-    |   7|  Praveen|         B|       G| 21|        13|      Java| Hyderabad|1967-12-01|     M|  6500|
-    |   1|    James|      null|   Smith| 51|        10|      .Net|   Newyork|1991-04-01|     M|  3000|
-    |   3|   Robert|      null|Williams| 32|        10|     Scala|California|1978-09-05|     M|  4000|
-    |  13|     null|      null|    null| 55|      null|      null|      null|      null|  null|  null|
-    |   4|    Maria|      Anne|   Jones| 36|         9|      Java| Hyderabad|1967-12-01|     F|  5000|
-    |   5|      Jen|      Mary|   Brown| 39|         5|     Scala|    Nagpur|1980-02-17|     F|     0|
-    |   9|  Pramodh|         B|       G| 49|         9|      Ruby|      Pune|1967-12-01|     M|  5000|
-    +----+---------+----------+--------+---+----------+----------+----------+----------+------+------+
+    +----+---------+----------+--------+---+----------+----------+----------+---------+----------+------+------+
+    |SrNo|firstname|middlename|lastname|age|experiance|     skill|      city|depart_id|       dob|gender|salary|
+    +----+---------+----------+--------+---+----------+----------+----------+---------+----------+------+------+
+    |   6|Prabhakar|         B|       G| 33|        11|    Python|      Pune|        2|1967-12-01|     M|  5000|
+    |  13|     null|      null|    null| 55|      null|      null|      null|        6|      null|  null|  null|
+    |   4|    Maria|      Anne|   Jones| 36|         9|      Java| Hyderabad|        4|1967-12-01|     F|  5000|
+    |  10|     Ajay|      null|    null| 50|        10|      null|      Pune|        5|1967-12-01|     M|  2500|
+    |   2|  Michael|      Rose|    null| 45|        11|      Ruby|   Newyork|        2|2000-05-19|     M|  4000|
+    |  11|      Bob|         D|    null| 43|        14|         R| Hyderabad|        6|1967-12-01|     M|  2500|
+    |   3|   Robert|      null|Williams| 32|        10|     Scala|California|        1|1978-09-05|     M|  4000|
+    |   8|   Rajesh|         B|       G| 25|         2|     Scala|   Nellore|        4|1967-12-01|     M|  5100|
+    |  12|    Chris|         B|   Smith| 47|        12|JavaScript|      null|        6|1967-12-01|     M|  2500|
+    |   7|  Praveen|         B|       G| 21|        13|      Java| Hyderabad|        3|1967-12-01|     M|  6500|
+    |   1|    James|      null|   Smith| 51|        10|      .Net|   Newyork|        1|1991-04-01|     M|  3000|
+    |   5|      Jen|      Mary|   Brown| 39|         5|     Scala|    Nagpur|        5|1980-02-17|     F|     0|
+    |   9|  Pramodh|         B|       G| 49|         9|      Ruby|      Pune|        1|1967-12-01|     M|  5000|
+    +----+---------+----------+--------+---+----------+----------+----------+---------+----------+------+------+
     
 
 
@@ -462,12 +525,12 @@ df.select(df['salary']/df.count()).show()
 df[df.firstname.isin("Prabhakar", "Praveen")].show()
 ```
 
-    +----+---------+----------+--------+---+----------+------+---------+----------+------+------+
-    |SrNo|firstname|middlename|lastname|age|experiance| skill|     city|       dob|gender|salary|
-    +----+---------+----------+--------+---+----------+------+---------+----------+------+------+
-    |   6|Prabhakar|         B|       G| 33|        11|Python|     Pune|1967-12-01|     M|  5000|
-    |   7|  Praveen|         B|       G| 21|        13|  Java|Hyderabad|1967-12-01|     M|  6500|
-    +----+---------+----------+--------+---+----------+------+---------+----------+------+------+
+    +----+---------+----------+--------+---+----------+------+---------+---------+----------+------+------+
+    |SrNo|firstname|middlename|lastname|age|experiance| skill|     city|depart_id|       dob|gender|salary|
+    +----+---------+----------+--------+---+----------+------+---------+---------+----------+------+------+
+    |   6|Prabhakar|         B|       G| 33|        11|Python|     Pune|        2|1967-12-01|     M|  5000|
+    |   7|  Praveen|         B|       G| 21|        13|  Java|Hyderabad|        3|1967-12-01|     M|  6500|
+    +----+---------+----------+--------+---+----------+------+---------+---------+----------+------+------+
     
 
 
@@ -614,23 +677,23 @@ df.select('firstname', df.salary.between(4000, 5000)).show()
 df.withColumn('Place', df.city).show()
 ```
 
-    +----+---------+----------+--------+---+----------+----------+----------+----------+------+------+----------+
-    |SrNo|firstname|middlename|lastname|age|experiance|     skill|      city|       dob|gender|salary|     Place|
-    +----+---------+----------+--------+---+----------+----------+----------+----------+------+------+----------+
-    |   1|    James|      null|   Smith| 51|        10|      .Net|   Newyork|1991-04-01|     M|  3000|   Newyork|
-    |   2|  Michael|      Rose|    null| 45|        11|      Ruby|   Newyork|2000-05-19|     M|  4000|   Newyork|
-    |   3|   Robert|      null|Williams| 32|        10|     Scala|California|1978-09-05|     M|  4000|California|
-    |   4|    Maria|      Anne|   Jones| 36|         9|      Java| Hyderabad|1967-12-01|     F|  5000| Hyderabad|
-    |   5|      Jen|      Mary|   Brown| 39|         5|     Scala|    Nagpur|1980-02-17|     F|     0|    Nagpur|
-    |   6|Prabhakar|         B|       G| 33|        11|    Python|      Pune|1967-12-01|     M|  5000|      Pune|
-    |   7|  Praveen|         B|       G| 21|        13|      Java| Hyderabad|1967-12-01|     M|  6500| Hyderabad|
-    |   8|   Rajesh|         B|       G| 25|         2|     Scala|   Nellore|1967-12-01|     M|  5100|   Nellore|
-    |   9|  Pramodh|         B|       G| 49|         9|      Ruby|      Pune|1967-12-01|     M|  5000|      Pune|
-    |  10|     Ajay|      null|    null| 50|        10|      null|      Pune|1967-12-01|     M|  2500|      Pune|
-    |  11|      Bob|         D|    null| 43|        14|         R| Hyderabad|1967-12-01|     M|  2500| Hyderabad|
-    |  12|    Chris|         B|   Smith| 47|        12|JavaScript|      null|1967-12-01|     M|  2500|      null|
-    |  13|     null|      null|    null| 55|      null|      null|      null|      null|  null|  null|      null|
-    +----+---------+----------+--------+---+----------+----------+----------+----------+------+------+----------+
+    +----+---------+----------+--------+---+----------+----------+----------+---------+----------+------+------+----------+
+    |SrNo|firstname|middlename|lastname|age|experiance|     skill|      city|depart_id|       dob|gender|salary|     Place|
+    +----+---------+----------+--------+---+----------+----------+----------+---------+----------+------+------+----------+
+    |   1|    James|      null|   Smith| 51|        10|      .Net|   Newyork|        1|1991-04-01|     M|  3000|   Newyork|
+    |   2|  Michael|      Rose|    null| 45|        11|      Ruby|   Newyork|        2|2000-05-19|     M|  4000|   Newyork|
+    |   3|   Robert|      null|Williams| 32|        10|     Scala|California|        1|1978-09-05|     M|  4000|California|
+    |   4|    Maria|      Anne|   Jones| 36|         9|      Java| Hyderabad|        4|1967-12-01|     F|  5000| Hyderabad|
+    |   5|      Jen|      Mary|   Brown| 39|         5|     Scala|    Nagpur|        5|1980-02-17|     F|     0|    Nagpur|
+    |   6|Prabhakar|         B|       G| 33|        11|    Python|      Pune|        2|1967-12-01|     M|  5000|      Pune|
+    |   7|  Praveen|         B|       G| 21|        13|      Java| Hyderabad|        3|1967-12-01|     M|  6500| Hyderabad|
+    |   8|   Rajesh|         B|       G| 25|         2|     Scala|   Nellore|        4|1967-12-01|     M|  5100|   Nellore|
+    |   9|  Pramodh|         B|       G| 49|         9|      Ruby|      Pune|        1|1967-12-01|     M|  5000|      Pune|
+    |  10|     Ajay|      null|    null| 50|        10|      null|      Pune|        5|1967-12-01|     M|  2500|      Pune|
+    |  11|      Bob|         D|    null| 43|        14|         R| Hyderabad|        6|1967-12-01|     M|  2500| Hyderabad|
+    |  12|    Chris|         B|   Smith| 47|        12|JavaScript|      null|        6|1967-12-01|     M|  2500|      null|
+    |  13|     null|      null|    null| 55|      null|      null|      null|        6|      null|  null|  null|      null|
+    +----+---------+----------+--------+---+----------+----------+----------+---------+----------+------+------+----------+
     
 
 
@@ -641,23 +704,23 @@ df.withColumn('Place', df.city).show()
 df.withColumnRenamed('dob', 'Date Of Birth').show()
 ```
 
-    +----+---------+----------+--------+---+----------+----------+----------+-------------+------+------+
-    |SrNo|firstname|middlename|lastname|age|experiance|     skill|      city|Date Of Birth|gender|salary|
-    +----+---------+----------+--------+---+----------+----------+----------+-------------+------+------+
-    |   1|    James|      null|   Smith| 51|        10|      .Net|   Newyork|   1991-04-01|     M|  3000|
-    |   2|  Michael|      Rose|    null| 45|        11|      Ruby|   Newyork|   2000-05-19|     M|  4000|
-    |   3|   Robert|      null|Williams| 32|        10|     Scala|California|   1978-09-05|     M|  4000|
-    |   4|    Maria|      Anne|   Jones| 36|         9|      Java| Hyderabad|   1967-12-01|     F|  5000|
-    |   5|      Jen|      Mary|   Brown| 39|         5|     Scala|    Nagpur|   1980-02-17|     F|     0|
-    |   6|Prabhakar|         B|       G| 33|        11|    Python|      Pune|   1967-12-01|     M|  5000|
-    |   7|  Praveen|         B|       G| 21|        13|      Java| Hyderabad|   1967-12-01|     M|  6500|
-    |   8|   Rajesh|         B|       G| 25|         2|     Scala|   Nellore|   1967-12-01|     M|  5100|
-    |   9|  Pramodh|         B|       G| 49|         9|      Ruby|      Pune|   1967-12-01|     M|  5000|
-    |  10|     Ajay|      null|    null| 50|        10|      null|      Pune|   1967-12-01|     M|  2500|
-    |  11|      Bob|         D|    null| 43|        14|         R| Hyderabad|   1967-12-01|     M|  2500|
-    |  12|    Chris|         B|   Smith| 47|        12|JavaScript|      null|   1967-12-01|     M|  2500|
-    |  13|     null|      null|    null| 55|      null|      null|      null|         null|  null|  null|
-    +----+---------+----------+--------+---+----------+----------+----------+-------------+------+------+
+    +----+---------+----------+--------+---+----------+----------+----------+---------+-------------+------+------+
+    |SrNo|firstname|middlename|lastname|age|experiance|     skill|      city|depart_id|Date Of Birth|gender|salary|
+    +----+---------+----------+--------+---+----------+----------+----------+---------+-------------+------+------+
+    |   1|    James|      null|   Smith| 51|        10|      .Net|   Newyork|        1|   1991-04-01|     M|  3000|
+    |   2|  Michael|      Rose|    null| 45|        11|      Ruby|   Newyork|        2|   2000-05-19|     M|  4000|
+    |   3|   Robert|      null|Williams| 32|        10|     Scala|California|        1|   1978-09-05|     M|  4000|
+    |   4|    Maria|      Anne|   Jones| 36|         9|      Java| Hyderabad|        4|   1967-12-01|     F|  5000|
+    |   5|      Jen|      Mary|   Brown| 39|         5|     Scala|    Nagpur|        5|   1980-02-17|     F|     0|
+    |   6|Prabhakar|         B|       G| 33|        11|    Python|      Pune|        2|   1967-12-01|     M|  5000|
+    |   7|  Praveen|         B|       G| 21|        13|      Java| Hyderabad|        3|   1967-12-01|     M|  6500|
+    |   8|   Rajesh|         B|       G| 25|         2|     Scala|   Nellore|        4|   1967-12-01|     M|  5100|
+    |   9|  Pramodh|         B|       G| 49|         9|      Ruby|      Pune|        1|   1967-12-01|     M|  5000|
+    |  10|     Ajay|      null|    null| 50|        10|      null|      Pune|        5|   1967-12-01|     M|  2500|
+    |  11|      Bob|         D|    null| 43|        14|         R| Hyderabad|        6|   1967-12-01|     M|  2500|
+    |  12|    Chris|         B|   Smith| 47|        12|JavaScript|      null|        6|   1967-12-01|     M|  2500|
+    |  13|     null|      null|    null| 55|      null|      null|      null|        6|         null|  null|  null|
+    +----+---------+----------+--------+---+----------+----------+----------+---------+-------------+------+------+
     
 
 
@@ -668,23 +731,23 @@ df.withColumnRenamed('dob', 'Date Of Birth').show()
 df.drop('middlename').show()
 ```
 
-    +----+---------+--------+---+----------+----------+----------+----------+------+------+
-    |SrNo|firstname|lastname|age|experiance|     skill|      city|       dob|gender|salary|
-    +----+---------+--------+---+----------+----------+----------+----------+------+------+
-    |   1|    James|   Smith| 51|        10|      .Net|   Newyork|1991-04-01|     M|  3000|
-    |   2|  Michael|    null| 45|        11|      Ruby|   Newyork|2000-05-19|     M|  4000|
-    |   3|   Robert|Williams| 32|        10|     Scala|California|1978-09-05|     M|  4000|
-    |   4|    Maria|   Jones| 36|         9|      Java| Hyderabad|1967-12-01|     F|  5000|
-    |   5|      Jen|   Brown| 39|         5|     Scala|    Nagpur|1980-02-17|     F|     0|
-    |   6|Prabhakar|       G| 33|        11|    Python|      Pune|1967-12-01|     M|  5000|
-    |   7|  Praveen|       G| 21|        13|      Java| Hyderabad|1967-12-01|     M|  6500|
-    |   8|   Rajesh|       G| 25|         2|     Scala|   Nellore|1967-12-01|     M|  5100|
-    |   9|  Pramodh|       G| 49|         9|      Ruby|      Pune|1967-12-01|     M|  5000|
-    |  10|     Ajay|    null| 50|        10|      null|      Pune|1967-12-01|     M|  2500|
-    |  11|      Bob|    null| 43|        14|         R| Hyderabad|1967-12-01|     M|  2500|
-    |  12|    Chris|   Smith| 47|        12|JavaScript|      null|1967-12-01|     M|  2500|
-    |  13|     null|    null| 55|      null|      null|      null|      null|  null|  null|
-    +----+---------+--------+---+----------+----------+----------+----------+------+------+
+    +----+---------+--------+---+----------+----------+----------+---------+----------+------+------+
+    |SrNo|firstname|lastname|age|experiance|     skill|      city|depart_id|       dob|gender|salary|
+    +----+---------+--------+---+----------+----------+----------+---------+----------+------+------+
+    |   1|    James|   Smith| 51|        10|      .Net|   Newyork|        1|1991-04-01|     M|  3000|
+    |   2|  Michael|    null| 45|        11|      Ruby|   Newyork|        2|2000-05-19|     M|  4000|
+    |   3|   Robert|Williams| 32|        10|     Scala|California|        1|1978-09-05|     M|  4000|
+    |   4|    Maria|   Jones| 36|         9|      Java| Hyderabad|        4|1967-12-01|     F|  5000|
+    |   5|      Jen|   Brown| 39|         5|     Scala|    Nagpur|        5|1980-02-17|     F|     0|
+    |   6|Prabhakar|       G| 33|        11|    Python|      Pune|        2|1967-12-01|     M|  5000|
+    |   7|  Praveen|       G| 21|        13|      Java| Hyderabad|        3|1967-12-01|     M|  6500|
+    |   8|   Rajesh|       G| 25|         2|     Scala|   Nellore|        4|1967-12-01|     M|  5100|
+    |   9|  Pramodh|       G| 49|         9|      Ruby|      Pune|        1|1967-12-01|     M|  5000|
+    |  10|     Ajay|    null| 50|        10|      null|      Pune|        5|1967-12-01|     M|  2500|
+    |  11|      Bob|    null| 43|        14|         R| Hyderabad|        6|1967-12-01|     M|  2500|
+    |  12|    Chris|   Smith| 47|        12|JavaScript|      null|        6|1967-12-01|     M|  2500|
+    |  13|     null|    null| 55|      null|      null|      null|        6|      null|  null|  null|
+    +----+---------+--------+---+----------+----------+----------+---------+----------+------+------+
     
 
 
@@ -693,16 +756,16 @@ df.drop('middlename').show()
 df.na.drop().show()
 ```
 
-    +----+---------+----------+--------+---+----------+------+---------+----------+------+------+
-    |SrNo|firstname|middlename|lastname|age|experiance| skill|     city|       dob|gender|salary|
-    +----+---------+----------+--------+---+----------+------+---------+----------+------+------+
-    |   4|    Maria|      Anne|   Jones| 36|         9|  Java|Hyderabad|1967-12-01|     F|  5000|
-    |   5|      Jen|      Mary|   Brown| 39|         5| Scala|   Nagpur|1980-02-17|     F|     0|
-    |   6|Prabhakar|         B|       G| 33|        11|Python|     Pune|1967-12-01|     M|  5000|
-    |   7|  Praveen|         B|       G| 21|        13|  Java|Hyderabad|1967-12-01|     M|  6500|
-    |   8|   Rajesh|         B|       G| 25|         2| Scala|  Nellore|1967-12-01|     M|  5100|
-    |   9|  Pramodh|         B|       G| 49|         9|  Ruby|     Pune|1967-12-01|     M|  5000|
-    +----+---------+----------+--------+---+----------+------+---------+----------+------+------+
+    +----+---------+----------+--------+---+----------+------+---------+---------+----------+------+------+
+    |SrNo|firstname|middlename|lastname|age|experiance| skill|     city|depart_id|       dob|gender|salary|
+    +----+---------+----------+--------+---+----------+------+---------+---------+----------+------+------+
+    |   4|    Maria|      Anne|   Jones| 36|         9|  Java|Hyderabad|        4|1967-12-01|     F|  5000|
+    |   5|      Jen|      Mary|   Brown| 39|         5| Scala|   Nagpur|        5|1980-02-17|     F|     0|
+    |   6|Prabhakar|         B|       G| 33|        11|Python|     Pune|        2|1967-12-01|     M|  5000|
+    |   7|  Praveen|         B|       G| 21|        13|  Java|Hyderabad|        3|1967-12-01|     M|  6500|
+    |   8|   Rajesh|         B|       G| 25|         2| Scala|  Nellore|        4|1967-12-01|     M|  5100|
+    |   9|  Pramodh|         B|       G| 49|         9|  Ruby|     Pune|        1|1967-12-01|     M|  5000|
+    +----+---------+----------+--------+---+----------+------+---------+---------+----------+------+------+
     
 
 
@@ -713,23 +776,23 @@ df.na.drop().show()
 df.na.drop(how='all').show()
 ```
 
-    +----+---------+----------+--------+---+----------+----------+----------+----------+------+------+
-    |SrNo|firstname|middlename|lastname|age|experiance|     skill|      city|       dob|gender|salary|
-    +----+---------+----------+--------+---+----------+----------+----------+----------+------+------+
-    |   1|    James|      null|   Smith| 51|        10|      .Net|   Newyork|1991-04-01|     M|  3000|
-    |   2|  Michael|      Rose|    null| 45|        11|      Ruby|   Newyork|2000-05-19|     M|  4000|
-    |   3|   Robert|      null|Williams| 32|        10|     Scala|California|1978-09-05|     M|  4000|
-    |   4|    Maria|      Anne|   Jones| 36|         9|      Java| Hyderabad|1967-12-01|     F|  5000|
-    |   5|      Jen|      Mary|   Brown| 39|         5|     Scala|    Nagpur|1980-02-17|     F|     0|
-    |   6|Prabhakar|         B|       G| 33|        11|    Python|      Pune|1967-12-01|     M|  5000|
-    |   7|  Praveen|         B|       G| 21|        13|      Java| Hyderabad|1967-12-01|     M|  6500|
-    |   8|   Rajesh|         B|       G| 25|         2|     Scala|   Nellore|1967-12-01|     M|  5100|
-    |   9|  Pramodh|         B|       G| 49|         9|      Ruby|      Pune|1967-12-01|     M|  5000|
-    |  10|     Ajay|      null|    null| 50|        10|      null|      Pune|1967-12-01|     M|  2500|
-    |  11|      Bob|         D|    null| 43|        14|         R| Hyderabad|1967-12-01|     M|  2500|
-    |  12|    Chris|         B|   Smith| 47|        12|JavaScript|      null|1967-12-01|     M|  2500|
-    |  13|     null|      null|    null| 55|      null|      null|      null|      null|  null|  null|
-    +----+---------+----------+--------+---+----------+----------+----------+----------+------+------+
+    +----+---------+----------+--------+---+----------+----------+----------+---------+----------+------+------+
+    |SrNo|firstname|middlename|lastname|age|experiance|     skill|      city|depart_id|       dob|gender|salary|
+    +----+---------+----------+--------+---+----------+----------+----------+---------+----------+------+------+
+    |   1|    James|      null|   Smith| 51|        10|      .Net|   Newyork|        1|1991-04-01|     M|  3000|
+    |   2|  Michael|      Rose|    null| 45|        11|      Ruby|   Newyork|        2|2000-05-19|     M|  4000|
+    |   3|   Robert|      null|Williams| 32|        10|     Scala|California|        1|1978-09-05|     M|  4000|
+    |   4|    Maria|      Anne|   Jones| 36|         9|      Java| Hyderabad|        4|1967-12-01|     F|  5000|
+    |   5|      Jen|      Mary|   Brown| 39|         5|     Scala|    Nagpur|        5|1980-02-17|     F|     0|
+    |   6|Prabhakar|         B|       G| 33|        11|    Python|      Pune|        2|1967-12-01|     M|  5000|
+    |   7|  Praveen|         B|       G| 21|        13|      Java| Hyderabad|        3|1967-12-01|     M|  6500|
+    |   8|   Rajesh|         B|       G| 25|         2|     Scala|   Nellore|        4|1967-12-01|     M|  5100|
+    |   9|  Pramodh|         B|       G| 49|         9|      Ruby|      Pune|        1|1967-12-01|     M|  5000|
+    |  10|     Ajay|      null|    null| 50|        10|      null|      Pune|        5|1967-12-01|     M|  2500|
+    |  11|      Bob|         D|    null| 43|        14|         R| Hyderabad|        6|1967-12-01|     M|  2500|
+    |  12|    Chris|         B|   Smith| 47|        12|JavaScript|      null|        6|1967-12-01|     M|  2500|
+    |  13|     null|      null|    null| 55|      null|      null|      null|        6|      null|  null|  null|
+    +----+---------+----------+--------+---+----------+----------+----------+---------+----------+------+------+
     
 
 
@@ -740,16 +803,16 @@ df.na.drop(how='all').show()
 df.na.drop(how='any').show()
 ```
 
-    +----+---------+----------+--------+---+----------+------+---------+----------+------+------+
-    |SrNo|firstname|middlename|lastname|age|experiance| skill|     city|       dob|gender|salary|
-    +----+---------+----------+--------+---+----------+------+---------+----------+------+------+
-    |   4|    Maria|      Anne|   Jones| 36|         9|  Java|Hyderabad|1967-12-01|     F|  5000|
-    |   5|      Jen|      Mary|   Brown| 39|         5| Scala|   Nagpur|1980-02-17|     F|     0|
-    |   6|Prabhakar|         B|       G| 33|        11|Python|     Pune|1967-12-01|     M|  5000|
-    |   7|  Praveen|         B|       G| 21|        13|  Java|Hyderabad|1967-12-01|     M|  6500|
-    |   8|   Rajesh|         B|       G| 25|         2| Scala|  Nellore|1967-12-01|     M|  5100|
-    |   9|  Pramodh|         B|       G| 49|         9|  Ruby|     Pune|1967-12-01|     M|  5000|
-    +----+---------+----------+--------+---+----------+------+---------+----------+------+------+
+    +----+---------+----------+--------+---+----------+------+---------+---------+----------+------+------+
+    |SrNo|firstname|middlename|lastname|age|experiance| skill|     city|depart_id|       dob|gender|salary|
+    +----+---------+----------+--------+---+----------+------+---------+---------+----------+------+------+
+    |   4|    Maria|      Anne|   Jones| 36|         9|  Java|Hyderabad|        4|1967-12-01|     F|  5000|
+    |   5|      Jen|      Mary|   Brown| 39|         5| Scala|   Nagpur|        5|1980-02-17|     F|     0|
+    |   6|Prabhakar|         B|       G| 33|        11|Python|     Pune|        2|1967-12-01|     M|  5000|
+    |   7|  Praveen|         B|       G| 21|        13|  Java|Hyderabad|        3|1967-12-01|     M|  6500|
+    |   8|   Rajesh|         B|       G| 25|         2| Scala|  Nellore|        4|1967-12-01|     M|  5100|
+    |   9|  Pramodh|         B|       G| 49|         9|  Ruby|     Pune|        1|1967-12-01|     M|  5000|
+    +----+---------+----------+--------+---+----------+------+---------+---------+----------+------+------+
     
 
 
@@ -760,23 +823,23 @@ df.na.drop(how='any').show()
 df.na.fill(0,['salary', 'experiance']).na.fill('Missing Value').show()
 ```
 
-    +----+-------------+-------------+-------------+---+----------+-------------+-------------+-------------+-------------+------+
-    |SrNo|    firstname|   middlename|     lastname|age|experiance|        skill|         city|          dob|       gender|salary|
-    +----+-------------+-------------+-------------+---+----------+-------------+-------------+-------------+-------------+------+
-    |   1|        James|Missing Value|        Smith| 51|        10|         .Net|      Newyork|   1991-04-01|            M|  3000|
-    |   2|      Michael|         Rose|Missing Value| 45|        11|         Ruby|      Newyork|   2000-05-19|            M|  4000|
-    |   3|       Robert|Missing Value|     Williams| 32|        10|        Scala|   California|   1978-09-05|            M|  4000|
-    |   4|        Maria|         Anne|        Jones| 36|         9|         Java|    Hyderabad|   1967-12-01|            F|  5000|
-    |   5|          Jen|         Mary|        Brown| 39|         5|        Scala|       Nagpur|   1980-02-17|            F|     0|
-    |   6|    Prabhakar|            B|            G| 33|        11|       Python|         Pune|   1967-12-01|            M|  5000|
-    |   7|      Praveen|            B|            G| 21|        13|         Java|    Hyderabad|   1967-12-01|            M|  6500|
-    |   8|       Rajesh|            B|            G| 25|         2|        Scala|      Nellore|   1967-12-01|            M|  5100|
-    |   9|      Pramodh|            B|            G| 49|         9|         Ruby|         Pune|   1967-12-01|            M|  5000|
-    |  10|         Ajay|Missing Value|Missing Value| 50|        10|Missing Value|         Pune|   1967-12-01|            M|  2500|
-    |  11|          Bob|            D|Missing Value| 43|        14|            R|    Hyderabad|   1967-12-01|            M|  2500|
-    |  12|        Chris|            B|        Smith| 47|        12|   JavaScript|Missing Value|   1967-12-01|            M|  2500|
-    |  13|Missing Value|Missing Value|Missing Value| 55|         0|Missing Value|Missing Value|Missing Value|Missing Value|     0|
-    +----+-------------+-------------+-------------+---+----------+-------------+-------------+-------------+-------------+------+
+    +----+-------------+-------------+-------------+---+----------+-------------+-------------+---------+-------------+-------------+------+
+    |SrNo|    firstname|   middlename|     lastname|age|experiance|        skill|         city|depart_id|          dob|       gender|salary|
+    +----+-------------+-------------+-------------+---+----------+-------------+-------------+---------+-------------+-------------+------+
+    |   1|        James|Missing Value|        Smith| 51|        10|         .Net|      Newyork|        1|   1991-04-01|            M|  3000|
+    |   2|      Michael|         Rose|Missing Value| 45|        11|         Ruby|      Newyork|        2|   2000-05-19|            M|  4000|
+    |   3|       Robert|Missing Value|     Williams| 32|        10|        Scala|   California|        1|   1978-09-05|            M|  4000|
+    |   4|        Maria|         Anne|        Jones| 36|         9|         Java|    Hyderabad|        4|   1967-12-01|            F|  5000|
+    |   5|          Jen|         Mary|        Brown| 39|         5|        Scala|       Nagpur|        5|   1980-02-17|            F|     0|
+    |   6|    Prabhakar|            B|            G| 33|        11|       Python|         Pune|        2|   1967-12-01|            M|  5000|
+    |   7|      Praveen|            B|            G| 21|        13|         Java|    Hyderabad|        3|   1967-12-01|            M|  6500|
+    |   8|       Rajesh|            B|            G| 25|         2|        Scala|      Nellore|        4|   1967-12-01|            M|  5100|
+    |   9|      Pramodh|            B|            G| 49|         9|         Ruby|         Pune|        1|   1967-12-01|            M|  5000|
+    |  10|         Ajay|Missing Value|Missing Value| 50|        10|Missing Value|         Pune|        5|   1967-12-01|            M|  2500|
+    |  11|          Bob|            D|Missing Value| 43|        14|            R|    Hyderabad|        6|   1967-12-01|            M|  2500|
+    |  12|        Chris|            B|        Smith| 47|        12|   JavaScript|Missing Value|        6|   1967-12-01|            M|  2500|
+    |  13|Missing Value|Missing Value|Missing Value| 55|         0|Missing Value|Missing Value|        6|Missing Value|Missing Value|     0|
+    +----+-------------+-------------+-------------+---+----------+-------------+-------------+---------+-------------+-------------+------+
     
 
 
@@ -791,15 +854,15 @@ Filter Operation<br/>
 df.filter("experiance > 10").show()
 ```
 
-    +----+---------+----------+--------+---+----------+----------+---------+----------+------+------+
-    |SrNo|firstname|middlename|lastname|age|experiance|     skill|     city|       dob|gender|salary|
-    +----+---------+----------+--------+---+----------+----------+---------+----------+------+------+
-    |   2|  Michael|      Rose|    null| 45|        11|      Ruby|  Newyork|2000-05-19|     M|  4000|
-    |   6|Prabhakar|         B|       G| 33|        11|    Python|     Pune|1967-12-01|     M|  5000|
-    |   7|  Praveen|         B|       G| 21|        13|      Java|Hyderabad|1967-12-01|     M|  6500|
-    |  11|      Bob|         D|    null| 43|        14|         R|Hyderabad|1967-12-01|     M|  2500|
-    |  12|    Chris|         B|   Smith| 47|        12|JavaScript|     null|1967-12-01|     M|  2500|
-    +----+---------+----------+--------+---+----------+----------+---------+----------+------+------+
+    +----+---------+----------+--------+---+----------+----------+---------+---------+----------+------+------+
+    |SrNo|firstname|middlename|lastname|age|experiance|     skill|     city|depart_id|       dob|gender|salary|
+    +----+---------+----------+--------+---+----------+----------+---------+---------+----------+------+------+
+    |   2|  Michael|      Rose|    null| 45|        11|      Ruby|  Newyork|        2|2000-05-19|     M|  4000|
+    |   6|Prabhakar|         B|       G| 33|        11|    Python|     Pune|        2|1967-12-01|     M|  5000|
+    |   7|  Praveen|         B|       G| 21|        13|      Java|Hyderabad|        3|1967-12-01|     M|  6500|
+    |  11|      Bob|         D|    null| 43|        14|         R|Hyderabad|        6|1967-12-01|     M|  2500|
+    |  12|    Chris|         B|   Smith| 47|        12|JavaScript|     null|        6|1967-12-01|     M|  2500|
+    +----+---------+----------+--------+---+----------+----------+---------+---------+----------+------+------+
     
 
 
@@ -827,15 +890,15 @@ df_temp = df.na.fill(0,['experiance','salary'])
 df_temp.filter(df_temp['experiance'] > 10).show()
 ```
 
-    +----+---------+----------+--------+---+----------+----------+---------+----------+------+------+
-    |SrNo|firstname|middlename|lastname|age|experiance|     skill|     city|       dob|gender|salary|
-    +----+---------+----------+--------+---+----------+----------+---------+----------+------+------+
-    |   2|  Michael|      Rose|    null| 45|        11|      Ruby|  Newyork|2000-05-19|     M|  4000|
-    |   6|Prabhakar|         B|       G| 33|        11|    Python|     Pune|1967-12-01|     M|  5000|
-    |   7|  Praveen|         B|       G| 21|        13|      Java|Hyderabad|1967-12-01|     M|  6500|
-    |  11|      Bob|         D|    null| 43|        14|         R|Hyderabad|1967-12-01|     M|  2500|
-    |  12|    Chris|         B|   Smith| 47|        12|JavaScript|     null|1967-12-01|     M|  2500|
-    +----+---------+----------+--------+---+----------+----------+---------+----------+------+------+
+    +----+---------+----------+--------+---+----------+----------+---------+---------+----------+------+------+
+    |SrNo|firstname|middlename|lastname|age|experiance|     skill|     city|depart_id|       dob|gender|salary|
+    +----+---------+----------+--------+---+----------+----------+---------+---------+----------+------+------+
+    |   2|  Michael|      Rose|    null| 45|        11|      Ruby|  Newyork|        2|2000-05-19|     M|  4000|
+    |   6|Prabhakar|         B|       G| 33|        11|    Python|     Pune|        2|1967-12-01|     M|  5000|
+    |   7|  Praveen|         B|       G| 21|        13|      Java|Hyderabad|        3|1967-12-01|     M|  6500|
+    |  11|      Bob|         D|    null| 43|        14|         R|Hyderabad|        6|1967-12-01|     M|  2500|
+    |  12|    Chris|         B|   Smith| 47|        12|JavaScript|     null|        6|1967-12-01|     M|  2500|
+    +----+---------+----------+--------+---+----------+----------+---------+---------+----------+------+------+
     
 
 
@@ -846,18 +909,18 @@ df_temp.filter(df_temp['experiance'] > 10).show()
 df_temp.filter(~(df_temp['experiance'] > 10)).show()
 ```
 
-    +----+---------+----------+--------+---+----------+-----+----------+----------+------+------+
-    |SrNo|firstname|middlename|lastname|age|experiance|skill|      city|       dob|gender|salary|
-    +----+---------+----------+--------+---+----------+-----+----------+----------+------+------+
-    |   1|    James|      null|   Smith| 51|        10| .Net|   Newyork|1991-04-01|     M|  3000|
-    |   3|   Robert|      null|Williams| 32|        10|Scala|California|1978-09-05|     M|  4000|
-    |   4|    Maria|      Anne|   Jones| 36|         9| Java| Hyderabad|1967-12-01|     F|  5000|
-    |   5|      Jen|      Mary|   Brown| 39|         5|Scala|    Nagpur|1980-02-17|     F|     0|
-    |   8|   Rajesh|         B|       G| 25|         2|Scala|   Nellore|1967-12-01|     M|  5100|
-    |   9|  Pramodh|         B|       G| 49|         9| Ruby|      Pune|1967-12-01|     M|  5000|
-    |  10|     Ajay|      null|    null| 50|        10| null|      Pune|1967-12-01|     M|  2500|
-    |  13|     null|      null|    null| 55|         0| null|      null|      null|  null|     0|
-    +----+---------+----------+--------+---+----------+-----+----------+----------+------+------+
+    +----+---------+----------+--------+---+----------+-----+----------+---------+----------+------+------+
+    |SrNo|firstname|middlename|lastname|age|experiance|skill|      city|depart_id|       dob|gender|salary|
+    +----+---------+----------+--------+---+----------+-----+----------+---------+----------+------+------+
+    |   1|    James|      null|   Smith| 51|        10| .Net|   Newyork|        1|1991-04-01|     M|  3000|
+    |   3|   Robert|      null|Williams| 32|        10|Scala|California|        1|1978-09-05|     M|  4000|
+    |   4|    Maria|      Anne|   Jones| 36|         9| Java| Hyderabad|        4|1967-12-01|     F|  5000|
+    |   5|      Jen|      Mary|   Brown| 39|         5|Scala|    Nagpur|        5|1980-02-17|     F|     0|
+    |   8|   Rajesh|         B|       G| 25|         2|Scala|   Nellore|        4|1967-12-01|     M|  5100|
+    |   9|  Pramodh|         B|       G| 49|         9| Ruby|      Pune|        1|1967-12-01|     M|  5000|
+    |  10|     Ajay|      null|    null| 50|        10| null|      Pune|        5|1967-12-01|     M|  2500|
+    |  13|     null|      null|    null| 55|         0| null|      null|        6|      null|  null|     0|
+    +----+---------+----------+--------+---+----------+-----+----------+---------+----------+------+------+
     
 
 
@@ -875,6 +938,7 @@ df_temp.printSchema()
      |-- experiance: long (nullable = true)
      |-- skill: string (nullable = true)
      |-- city: string (nullable = true)
+     |-- depart_id: long (nullable = true)
      |-- dob: string (nullable = true)
      |-- gender: string (nullable = true)
      |-- salary: long (nullable = true)
@@ -888,17 +952,17 @@ df_temp.printSchema()
 df_temp.groupBy('city').sum().show()
 ```
 
-    +----------+---------+--------+---------------+-----------+
-    |      city|sum(SrNo)|sum(age)|sum(experiance)|sum(salary)|
-    +----------+---------+--------+---------------+-----------+
-    |      null|       25|     102|             12|       2500|
-    |   Newyork|        3|      96|             21|       7000|
-    |   Nellore|        8|      25|              2|       5100|
-    |      Pune|       25|     132|             30|      12500|
-    |    Nagpur|        5|      39|              5|          0|
-    | Hyderabad|       22|     100|             36|      14000|
-    |California|        3|      32|             10|       4000|
-    +----------+---------+--------+---------------+-----------+
+    +----------+---------+--------+---------------+--------------+-----------+
+    |      city|sum(SrNo)|sum(age)|sum(experiance)|sum(depart_id)|sum(salary)|
+    +----------+---------+--------+---------------+--------------+-----------+
+    |      null|       25|     102|             12|            12|       2500|
+    |   Newyork|        3|      96|             21|             3|       7000|
+    |   Nellore|        8|      25|              2|             4|       5100|
+    |      Pune|       25|     132|             30|             8|      12500|
+    |    Nagpur|        5|      39|              5|             5|          0|
+    | Hyderabad|       22|     100|             36|            13|      14000|
+    |California|        3|      32|             10|             1|       4000|
+    +----------+---------+--------+---------------+--------------+-----------+
     
 
 
@@ -907,18 +971,18 @@ df_temp.groupBy('city').sum().show()
 df_temp.groupBy('skill').sum().show()
 ```
 
-    +----------+---------+--------+---------------+-----------+
-    |     skill|sum(SrNo)|sum(age)|sum(experiance)|sum(salary)|
-    +----------+---------+--------+---------------+-----------+
-    |      .Net|        1|      51|             10|       3000|
-    |JavaScript|       12|      47|             12|       2500|
-    |      null|       23|     105|             10|       2500|
-    |         R|       11|      43|             14|       2500|
-    |     Scala|       16|      96|             17|       9100|
-    |      Ruby|       11|      94|             20|       9000|
-    |    Python|        6|      33|             11|       5000|
-    |      Java|       11|      57|             22|      11500|
-    +----------+---------+--------+---------------+-----------+
+    +----------+---------+--------+---------------+--------------+-----------+
+    |     skill|sum(SrNo)|sum(age)|sum(experiance)|sum(depart_id)|sum(salary)|
+    +----------+---------+--------+---------------+--------------+-----------+
+    |      .Net|        1|      51|             10|             1|       3000|
+    |JavaScript|       12|      47|             12|             6|       2500|
+    |      null|       23|     105|             10|            11|       2500|
+    |         R|       11|      43|             14|             6|       2500|
+    |     Scala|       16|      96|             17|            10|       9100|
+    |      Ruby|       11|      94|             20|             3|       9000|
+    |    Python|        6|      33|             11|             2|       5000|
+    |      Java|       11|      57|             22|             7|      11500|
+    +----------+---------+--------+---------------+--------------+-----------+
     
 
 
@@ -947,17 +1011,17 @@ df_temp.groupBy('skill').count().show()
 df_temp.groupBy('salary').min().show()
 ```
 
-    +------+---------+--------+---------------+-----------+
-    |salary|min(SrNo)|min(age)|min(experiance)|min(salary)|
-    +------+---------+--------+---------------+-----------+
-    |     0|        5|      39|              0|          0|
-    |  5100|        8|      25|              2|       5100|
-    |  4000|        2|      32|             10|       4000|
-    |  6500|        7|      21|             13|       6500|
-    |  2500|       10|      43|             10|       2500|
-    |  3000|        1|      51|             10|       3000|
-    |  5000|        4|      33|              9|       5000|
-    +------+---------+--------+---------------+-----------+
+    +------+---------+--------+---------------+--------------+-----------+
+    |salary|min(SrNo)|min(age)|min(experiance)|min(depart_id)|min(salary)|
+    +------+---------+--------+---------------+--------------+-----------+
+    |     0|        5|      39|              0|             5|          0|
+    |  5100|        8|      25|              2|             4|       5100|
+    |  4000|        2|      32|             10|             1|       4000|
+    |  6500|        7|      21|             13|             3|       6500|
+    |  2500|       10|      43|             10|             5|       2500|
+    |  3000|        1|      51|             10|             1|       3000|
+    |  5000|        4|      33|              9|             1|       5000|
+    +------+---------+--------+---------------+--------------+-----------+
     
 
 
@@ -966,17 +1030,17 @@ df_temp.groupBy('salary').min().show()
 df_temp.groupBy('salary').max().show()
 ```
 
-    +------+---------+--------+---------------+-----------+
-    |salary|max(SrNo)|max(age)|max(experiance)|max(salary)|
-    +------+---------+--------+---------------+-----------+
-    |     0|       13|      55|              5|          0|
-    |  5100|        8|      25|              2|       5100|
-    |  4000|        3|      45|             11|       4000|
-    |  6500|        7|      21|             13|       6500|
-    |  2500|       12|      50|             14|       2500|
-    |  3000|        1|      51|             10|       3000|
-    |  5000|        9|      49|             11|       5000|
-    +------+---------+--------+---------------+-----------+
+    +------+---------+--------+---------------+--------------+-----------+
+    |salary|max(SrNo)|max(age)|max(experiance)|max(depart_id)|max(salary)|
+    +------+---------+--------+---------------+--------------+-----------+
+    |     0|       13|      55|              5|             6|          0|
+    |  5100|        8|      25|              2|             4|       5100|
+    |  4000|        3|      45|             11|             2|       4000|
+    |  6500|        7|      21|             13|             3|       6500|
+    |  2500|       12|      50|             14|             6|       2500|
+    |  3000|        1|      51|             10|             1|       3000|
+    |  5000|        9|      49|             11|             4|       5000|
+    +------+---------+--------+---------------+--------------+-----------+
     
 
 
@@ -985,17 +1049,17 @@ df_temp.groupBy('salary').max().show()
 df_temp.groupBy('salary').avg().show()
 ```
 
-    +------+-----------------+------------------+-----------------+-----------+
-    |salary|        avg(SrNo)|          avg(age)|  avg(experiance)|avg(salary)|
-    +------+-----------------+------------------+-----------------+-----------+
-    |     0|              9.0|              47.0|              2.5|        0.0|
-    |  5100|              8.0|              25.0|              2.0|     5100.0|
-    |  4000|              2.5|              38.5|             10.5|     4000.0|
-    |  6500|              7.0|              21.0|             13.0|     6500.0|
-    |  2500|             11.0|46.666666666666664|             12.0|     2500.0|
-    |  3000|              1.0|              51.0|             10.0|     3000.0|
-    |  5000|6.333333333333333|39.333333333333336|9.666666666666666|     5000.0|
-    +------+-----------------+------------------+-----------------+-----------+
+    +------+-----------------+------------------+-----------------+------------------+-----------+
+    |salary|        avg(SrNo)|          avg(age)|  avg(experiance)|    avg(depart_id)|avg(salary)|
+    +------+-----------------+------------------+-----------------+------------------+-----------+
+    |     0|              9.0|              47.0|              2.5|               5.5|        0.0|
+    |  5100|              8.0|              25.0|              2.0|               4.0|     5100.0|
+    |  4000|              2.5|              38.5|             10.5|               1.5|     4000.0|
+    |  6500|              7.0|              21.0|             13.0|               3.0|     6500.0|
+    |  2500|             11.0|46.666666666666664|             12.0| 5.666666666666667|     2500.0|
+    |  3000|              1.0|              51.0|             10.0|               1.0|     3000.0|
+    |  5000|6.333333333333333|39.333333333333336|9.666666666666666|2.3333333333333335|     5000.0|
+    +------+-----------------+------------------+-----------------+------------------+-----------+
     
 
 
@@ -1004,23 +1068,23 @@ df_temp.groupBy('salary').avg().show()
 df_temp.show()
 ```
 
-    +----+---------+----------+--------+---+----------+----------+----------+----------+------+------+
-    |SrNo|firstname|middlename|lastname|age|experiance|     skill|      city|       dob|gender|salary|
-    +----+---------+----------+--------+---+----------+----------+----------+----------+------+------+
-    |   1|    James|      null|   Smith| 51|        10|      .Net|   Newyork|1991-04-01|     M|  3000|
-    |   2|  Michael|      Rose|    null| 45|        11|      Ruby|   Newyork|2000-05-19|     M|  4000|
-    |   3|   Robert|      null|Williams| 32|        10|     Scala|California|1978-09-05|     M|  4000|
-    |   4|    Maria|      Anne|   Jones| 36|         9|      Java| Hyderabad|1967-12-01|     F|  5000|
-    |   5|      Jen|      Mary|   Brown| 39|         5|     Scala|    Nagpur|1980-02-17|     F|     0|
-    |   6|Prabhakar|         B|       G| 33|        11|    Python|      Pune|1967-12-01|     M|  5000|
-    |   7|  Praveen|         B|       G| 21|        13|      Java| Hyderabad|1967-12-01|     M|  6500|
-    |   8|   Rajesh|         B|       G| 25|         2|     Scala|   Nellore|1967-12-01|     M|  5100|
-    |   9|  Pramodh|         B|       G| 49|         9|      Ruby|      Pune|1967-12-01|     M|  5000|
-    |  10|     Ajay|      null|    null| 50|        10|      null|      Pune|1967-12-01|     M|  2500|
-    |  11|      Bob|         D|    null| 43|        14|         R| Hyderabad|1967-12-01|     M|  2500|
-    |  12|    Chris|         B|   Smith| 47|        12|JavaScript|      null|1967-12-01|     M|  2500|
-    |  13|     null|      null|    null| 55|         0|      null|      null|      null|  null|     0|
-    +----+---------+----------+--------+---+----------+----------+----------+----------+------+------+
+    +----+---------+----------+--------+---+----------+----------+----------+---------+----------+------+------+
+    |SrNo|firstname|middlename|lastname|age|experiance|     skill|      city|depart_id|       dob|gender|salary|
+    +----+---------+----------+--------+---+----------+----------+----------+---------+----------+------+------+
+    |   1|    James|      null|   Smith| 51|        10|      .Net|   Newyork|        1|1991-04-01|     M|  3000|
+    |   2|  Michael|      Rose|    null| 45|        11|      Ruby|   Newyork|        2|2000-05-19|     M|  4000|
+    |   3|   Robert|      null|Williams| 32|        10|     Scala|California|        1|1978-09-05|     M|  4000|
+    |   4|    Maria|      Anne|   Jones| 36|         9|      Java| Hyderabad|        4|1967-12-01|     F|  5000|
+    |   5|      Jen|      Mary|   Brown| 39|         5|     Scala|    Nagpur|        5|1980-02-17|     F|     0|
+    |   6|Prabhakar|         B|       G| 33|        11|    Python|      Pune|        2|1967-12-01|     M|  5000|
+    |   7|  Praveen|         B|       G| 21|        13|      Java| Hyderabad|        3|1967-12-01|     M|  6500|
+    |   8|   Rajesh|         B|       G| 25|         2|     Scala|   Nellore|        4|1967-12-01|     M|  5100|
+    |   9|  Pramodh|         B|       G| 49|         9|      Ruby|      Pune|        1|1967-12-01|     M|  5000|
+    |  10|     Ajay|      null|    null| 50|        10|      null|      Pune|        5|1967-12-01|     M|  2500|
+    |  11|      Bob|         D|    null| 43|        14|         R| Hyderabad|        6|1967-12-01|     M|  2500|
+    |  12|    Chris|         B|   Smith| 47|        12|JavaScript|      null|        6|1967-12-01|     M|  2500|
+    |  13|     null|      null|    null| 55|         0|      null|      null|        6|      null|  null|     0|
+    +----+---------+----------+--------+---+----------+----------+----------+---------+----------+------+------+
     
 
 
