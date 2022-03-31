@@ -227,7 +227,13 @@ spark.sql("select D.department_name, count(*) from DEPARTMENT as D, EMPLOYEE EMP
 
 
 ```python
-spark.sql("select EMP.srno, EMP.firstname,D.department_name, EMP.salary from DEPARTMENT as D, EMPLOYEE EMP where D.department_id = EMP.depart_id ORDER by EMP.salary DESC").show()
+spark.sql("""
+    select 
+        EMP.srno, EMP.firstname,D.department_name, EMP.salary 
+    from DEPARTMENT as D, EMPLOYEE EMP 
+    where D.department_id = EMP.depart_id 
+    ORDER by EMP.salary DESC
+    """).show()
 ```
 
     +----+---------+---------------+------+
@@ -236,21 +242,19 @@ spark.sql("select EMP.srno, EMP.firstname,D.department_name, EMP.salary from DEP
     |   7|  Praveen|     MANAGEMENT|  6500|
     |   8|   Rajesh|        PAYROLL|  5100|
     |   9|  Pramodh|            IOT|  5000|
-    |   4|    Maria|        PAYROLL|  5000|
     |   6|Prabhakar|    DEVELOPMENT|  5000|
-    |   2|  Michael|    DEVELOPMENT|  4000|
+    |   4|    Maria|        PAYROLL|  5000|
     |   3|   Robert|            IOT|  4000|
+    |   2|  Michael|    DEVELOPMENT|  4000|
     |   1|    James|            IOT|  3000|
+    |  12|    Chris|       SECURITY|  2500|
     |  11|      Bob|       SECURITY|  2500|
     |  10|     Ajay|    RECRUITMENT|  2500|
-    |  12|    Chris|       SECURITY|  2500|
     |   5|      Jen|    RECRUITMENT|     0|
     |  13|     null|       SECURITY|  null|
     +----+---------+---------------+------+
     
 
-
-                                                                                    
 
 # Read CSV file content
 
